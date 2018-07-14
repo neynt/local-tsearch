@@ -1,0 +1,6 @@
+[package]
+name = "local_tsearch"
+version = "0.1.0"
+authors = ["neynt <hyriodula@gmail.com>"]
+
+[dependencies]
