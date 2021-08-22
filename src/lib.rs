@@ -1,15 +1,15 @@
 use std::fmt::Display;
 
-pub struct LocalSearchConfig<'a, T: 'a + Display> {
+pub struct Config<'a, T: 'a + Display, C: 'a + PartialOrd> {
     pub start_state: &'a Fn() -> T,
-    pub cost: &'a for<'r> Fn(&'r T) -> f64,
+    pub cost: &'a for<'r> Fn(&'r T) -> C,
     pub neighbor: &'a (for<'r> Fn(&'r T) -> T),
     pub num_restarts: usize,
 }
 
-pub fn local_search<T: Display>(c: &LocalSearchConfig<T>) -> T {
+pub fn local_search<T: Display, C: Display + PartialOrd>(c: &Config<T, C>) -> T {
     let mut best: T = (c.start_state)();
-    let mut best_cost: f64 = (c.cost)(&best);
+    let mut best_cost: C = (c.cost)(&best);
     println!("Init: {}", best);
     println!("Cost: {}", best_cost);
     for _restart_idx in 0 .. c.num_restarts {
